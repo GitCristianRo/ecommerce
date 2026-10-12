@@ -3,9 +3,10 @@ package com.proyectoibero.ecommerce.controller;
 import com.proyectoibero.ecommerce.model.Producto;
 import com.proyectoibero.ecommerce.service.ProductoService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Optional;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/api/productos")
@@ -23,13 +24,26 @@ public class ProductoController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Producto> obtenerPorId(@PathVariable Long id) {
-        return productoService.obtenerPorId(id);
+    public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
+
+        Optional<Producto> producto = productoService.obtenerPorId(id);
+
+        if (producto.isPresent()) {
+            return ResponseEntity.ok(producto.get());
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("No se encontró el producto con ID: " + id);
     }
 
     @PostMapping
-    public Producto guardar(@RequestBody Producto producto) {
-        return productoService.guardar(producto);
+    public ResponseEntity<Producto> guardar(@RequestBody Producto producto) {
+
+        Producto productoGuardado = productoService.guardar(producto);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(productoGuardado);
     }
 
     @PutMapping("/{id}")
