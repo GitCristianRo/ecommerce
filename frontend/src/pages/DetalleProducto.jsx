@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import { CartContext } from '../context/CartContext'
+import API_URL from "../api";
 
 function DetalleProducto() {
     const { id } = useParams()
@@ -20,7 +21,7 @@ function DetalleProducto() {
         setCantidad(1)
 
         axios
-            .get(`http://localhost:8080/api/productos/${id}`)
+            .get(`${API_URL}/api/productos/${id}`)
             .then((respuesta) => {
                 setProducto(respuesta.data)
             })

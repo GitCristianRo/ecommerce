@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import axios from 'axios'
 import { CartContext } from '../context/CartContext'
+import API_URL from "../api";
 
 function Carrito() {
     const { carrito, dispatch } = useContext(CartContext)
@@ -68,8 +69,8 @@ function Carrito() {
             setEnviando(true)
 
             const respuesta = await axios.post(
-                'http://localhost:8080/api/pedidos',
-                datosPedido
+                 `${API_URL}/api/pedidos`,
+                 datosPedido
             )
 
             dispatch({ type: 'VACIAR' })

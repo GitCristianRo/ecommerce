@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import API_URL from '../../api'
 
 function AdminPedidos() {
     const [pedidos, setPedidos] = useState([])
@@ -8,7 +9,7 @@ function AdminPedidos() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/api/pedidos')
+            .get(`${API_URL}/api/pedidos`)
             .then((response) => {
                 setPedidos(response.data)
             })
